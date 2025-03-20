@@ -26,8 +26,11 @@ app.post('/message', (req, res) => {
   const data = req.body;
   console.log('Received message from Laravel:', data);
 
-  // Émettre l'événement 'notification' sur tous les clients
-  io.emit('notification', data.message);
+  // Émettre l'événement 'notification' sur tous les clients avec l'institution_id
+  io.emit('notification', {
+    message: data.message,
+    institution_id: data.institution_id // Inclure l'institution_id
+  });
 
   // Répondre à la requête HTTP
   res.status(200).json({ message: 'Notification sent successfully' });
